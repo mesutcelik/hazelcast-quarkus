@@ -13,9 +13,8 @@ public class HazelcastClientConfig {
     @Produces
     HazelcastInstance createInstance() {
         ClientConfig clientConfig = new ClientConfig();
-        String[] members = System.getenv("HAZELCAST_IP").split(",");
-
-        clientConfig.getNetworkConfig().addAddress(members);
+        clientConfig.getNetworkConfig().getKubernetesConfig().setEnabled(true);
+        clientConfig.getNetworkConfig().getKubernetesConfig().setProperty("service-name","hz-hazelcast-enterprise");
         return HazelcastClient.newHazelcastClient(clientConfig);
     }
 }
